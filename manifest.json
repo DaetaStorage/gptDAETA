@@ -1,0 +1,44 @@
+{
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2MBdOVzt625XyC7w+j7BaDMbFXdbxK5we1IIw6gb8hJjg3h76XAsfXUO8cBdULGm40Z964dJyfcxTH96TtU22Me0TKmaDAmqnE3rqSokbKSauGwQcf5srJ8GuQCSkAT6gM5fQnfOWYzpJNFSAqBolRNKETG+joMeK9uTniQpNRUiVJuVowWWMMb/iIvmJWB8wapvlH7d93Z5z2d8Iv/3aQRIGkrCsDUdfQ4I8umBSfq7KjSgGbk94OK9FdtYgnwEOC4VU2SRee56271UzwqcaDwf9Gofa6rv9MRlv8274ENIrOM6BJo28HA03EFztyYpop5N7greDTucfisVkzj3EQIDAQAB",
+  "manifest_version": 3,
+  "name": "DÆTA: GPT to Earn",
+  "description": "Turn your Chat-GPT conversations into valuable datasets for model training and earn cryptocurrency rewards.",
+  "version": "0.1.1",
+  "icons": {
+    "16": "logo-daeta.png",
+    "32": "logo-daeta.png",
+    "48": "logo-daeta.png",
+    "64": "logo-daeta.png",
+    "128": "logo-daeta.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "logo-daeta.png",
+      "32": "logo-daeta.png",
+      "48": "logo-daeta.png",
+      "64": "logo-daeta.png",
+      "128": "logo-daeta.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "background", "activeTab", "scripting", "storage"],
+  "content_scripts": [
+    {
+      "js": ["src/content.ts"],
+      "matches": ["https://chatgpt.com/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "resources": ["*"]
+    }
+  ],
+  "minimum_chrome_version": "102",
+  "host_permissions": ["https://api.daeta.xyz/*"],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  }
+}
