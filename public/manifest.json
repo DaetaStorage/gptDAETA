@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "DaeTa Extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}
