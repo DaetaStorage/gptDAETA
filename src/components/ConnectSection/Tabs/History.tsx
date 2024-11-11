@@ -20,7 +20,7 @@ const History = () => {
         </div>
         <div className="flex flex-col gap-[1px] mt-[9px] w-full">
           <ActivityCard
-            logo="https://svgshare.com/i/1BJw.svg"
+            logo="https://www.daeta.xyz/lvrg/eth.svg"
             activityText="Activity"
             value={`+${item.reward} DaeTa`}
             valueClassName="text-green-500"
@@ -43,7 +43,7 @@ const History = () => {
 
         <div className="absolute top-[5px] left-4 flex flex-row items-center">
           <img
-            src={"https://svgshare.com/i/1BKD.svg"}
+            src={"https://daeta.xyz/lvrg/history.svg"}
             className="w-[14px] h-[14px]"
             alt="moneylogo"
           />
@@ -58,7 +58,7 @@ const History = () => {
   return (
     <div className="flex flex-col w-full space-mono bg-[#262626] relative pt-[17px] pl-4 pr-3">
       <div className="flex flex-row items-center gap-[5px]">
-        <img src={"https://svgshare.com/i/1BJB.svg"} alt="money_logo" />
+        <img src={"https://daeta.xyz/lvrg/money.svg"} alt="money_logo" />
         <div className="text-[12px] text-center font-bold space-mono">
           Earnings History
         </div>

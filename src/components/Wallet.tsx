@@ -30,7 +30,7 @@ const Wallet = () => {
           Connect Wallet
         </button>
         <img
-          src={"https://svgshare.com/i/1BKC.svg"}
+          src={"https://daeta.xyz/lvrg/crypto-wallet.svg"}
           alt="Crypto Wallet"
         />
       </div>

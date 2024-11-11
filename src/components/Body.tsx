@@ -11,34 +11,34 @@ const Body = () => {
   return (
     <>
       <button
-        className={`absolute bottom-32 p-[9px] bg-[#E0DECF] border border-[#808080] daeta-logo-radius border-r-0 ${
-          isClicked ? "right-[430px]" : "right-0"
+        className={`fixed bottom-32 right-0 p-[9px] transition-transform duration-300 ease-in-out bg-[#E0DECF] border border-[#808080] daeta-logo-radius border-r-0 ${
+          isClicked ? "translate-x-[-430px]" : "translate-x-0"
         }`}
         onClick={() => setIsClicked(!isClicked)}
       >
         <div className="w-[45px] h-[45px] bg-[#232323] rounded-full flex items-center justify-center">
-          <img src={"https://i.ibb.co/KXtC6X8/logo-daeta.png"} alt="logo" />
+          <img src={"https://daeta.xyz/lvrg/logo-daeta.png"} alt="logo" />
         </div>
       </button>
-
+      <div className={`w-[430px] ${isClicked ? "block" : "hidden"}`}></div>
       <div
-        className={`bg-[#E0DECF] flex flex-col items-center justify-center h-screen ${
-          isClicked ? "w-[430px] min-w-[430px]" : "hidden"
+        className={`bg-[#E0DECF] w-[430px] fixed right-0 flex flex-col transition-transform duration-300 ease-in-out items-center justify-center h-screen ${
+          isClicked ? "translate-x-0" : `translate-x-full`
         }`}
       >
         {isConnected ? (
           <>
             {(user && user._doc.isSkipped) || (user && user._doc.refCode) ? (
-              <CSections />
+              <CSections onClicked={setIsClicked} />
             ) : (
               <div className="bg-[#1C1C1C] relative h-[533px] flex flex-col justify-center items-center w-[360px]">
                 <img
-                  src={"https://svgshare.com/i/1BJ4.svg"}
+                  src={"https://daeta.xyz/lvrg/top.svg"}
                   className="absolute top-[-40px] left-0"
                   alt="decorative top"
                 />
                 <img
-                  src={"https://svgshare.com/i/1BGS.svg"}
+                  src={"https://daeta.xyz/lvrg/bottom.svg"}
                   className="absolute bottom-[-35px] left-0"
                   alt="decorative bottom"
                 />
@@ -53,7 +53,7 @@ const Body = () => {
                   </div>
                   <input
                     type="text"
-                    className="bg-white p-2 mt-4 rounded-md w-[220px] placeholder:text-center outline-none"
+                    className="bg-[#1c1c1c] text-slate-400 border-[#2e2e2e] border-[1px] p-2 mt-4 rounded-md w-[220px] placeholder:text-center outline-none"
                     placeholder="Your invite code"
                     value={refCode}
                     onChange={(e) => setRefCode(e.target.value)}
@@ -79,12 +79,12 @@ const Body = () => {
         ) : (
           <div className="bg-[#1C1C1C] relative h-[533px] flex flex-col justify-center items-center w-[360px]">
             <img
-              src={"https://svgshare.com/i/1BJ4.svg"}
+              src={"https://daeta.xyz/lvrg/top.svg"}
               className="absolute top-[-40px] left-0"
               alt="decorative top"
             />
             <img
-              src={"https://svgshare.com/i/1BGS.svg"}
+              src={"https://daeta.xyz/lvrg/bottom.svg"}
               className="absolute bottom-[-35px] left-0"
               alt="decorative bottom"
             />

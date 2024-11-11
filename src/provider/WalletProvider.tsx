@@ -117,14 +117,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
   const claimRewards = async (items: number, conversations: any) => {
     try {
       if (window.ethereum && window.ethereum.isMetaMask && account) {
-        const contract = new web3.eth.Contract(contractABI, DaeTaContract);
-        contract.methods.claimRewards(items * decimals).send({
-          from: account,
-        });
-
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-
-        await chrome.runtime.sendMessage(extensionId, {
+        const response = await chrome.runtime.sendMessage(extensionId, {
           type: "CLAIM_REWARDS",
           url: "https://api.daeta.xyz/api/extension/earning-history",
           options: {
@@ -139,27 +132,27 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
           },
         });
 
-        await getOrRegisterUser();
+        if (response.data && response.data.count) {
+          const contract = new web3.eth.Contract(contractABI, DaeTaContract);
+          contract.methods
+            .claimRewards(Number(response.data.count) * decimals)
+            .send({
+              from: account,
+            });
+
+          new Promise((resolve) => setTimeout(resolve, 50000));
+
+          await getOrRegisterUser();
+          alert("Transaction is succeed.");
+        } else {
+          alert(
+            "Warning. You already claimed rewards for those conversations."
+          );
+        }
       }
     } catch (error) {
-      console.error("Error during claiming rewards: ", error);
-      await chrome.runtime.sendMessage(extensionId, {
-        type: "CLAIM_REWARDS",
-        url: "https://api.daeta.xyz/api/extension/earning-history",
-        options: {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            wallet: account,
-            items: items,
-            reward: items,
-            conversations,
-          }),
-        },
-      });
-
       await getOrRegisterUser();
-      alert("Transaction Confirmation Failed");
+      alert("Transaction is pending, please check later.");
     }
   };
 

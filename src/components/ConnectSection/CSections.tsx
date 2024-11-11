@@ -13,7 +13,7 @@ const handleError = () => {
   alert("Error during disconnecting a wallet");
 };
 
-const CSections = () => {
+const CSections = ({ onClicked }: { onClicked: any }) => {
   const [active, setActive] = useState("earnings");
   const wallet = useWallet();
   const disconnectWallet = wallet ? wallet.disconnectWallet : handleError;
@@ -24,22 +24,22 @@ const CSections = () => {
 
   const bar = [
     {
-      icon: "https://svgshare.com/i/1BHs.svg",
+      icon: "https://daeta.xyz/lvrg/earnings.svg",
       title: "Earnings",
       act: "earnings",
-      activeIcon: "https://svgshare.com/i/1BK5.svg",
+      activeIcon: "https://daeta.xyz/lvrg/activeEarning.svg",
     },
     {
-      icon: "https://svgshare.com/i/1BKP.svg",
+      icon: "https://daeta.xyz/lvrg/history.svg",
       title: "History",
       act: "history",
-      activeIcon: "https://svgshare.com/i/1BJA.svg",
+      activeIcon: "https://daeta.xyz/lvrg/activeHistory.svg",
     },
     {
-      icon: "https://svgshare.com/i/1BK_.svg",
+      icon: "https://daeta.xyz/lvrg/money.svg",
       title: "Reward",
       act: "reward",
-      activeIcon: "https://svgshare.com/i/1BHe.svg",
+      activeIcon: "https://daeta.xyz/lvrg/activeMoney.svg",
     },
   ];
 
@@ -60,7 +60,10 @@ const CSections = () => {
       </div>
       <div className="min-w-[67px] bg-[#1C1C1C] h-screen flex flex-col gap-4 pt-[17px]">
         <div className="flex items-center justify-center">
-          <TbX className="text-2xl text-white" />
+          <TbX
+            className="text-2xl text-white cursor-pointer"
+            onClick={() => onClicked(false)}
+          />
         </div>
         <div className="flex flex-col gap-[45px] mt-[54px]">
           {bar.map((item, index) => (

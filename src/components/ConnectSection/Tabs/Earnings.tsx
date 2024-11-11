@@ -92,7 +92,7 @@ const Earnings = () => {
   if (user && user.histories.length > 0) {
     historyContent = user.histories.map((item: any, idx: number) => (
       <div key={idx} className="pb-[10px] w-full">
-        <div className="flex flex-col justify-start">
+        <div className="flex flex-col justify-start px-4">
           <div className="text-[#D9D9D9] text-[12px] font-normal space-mono leading-[24px]">
             Activity
             <br />
@@ -103,7 +103,7 @@ const Earnings = () => {
         </div>
         <div className="flex flex-col gap-[1px] mt-[9px] w-full">
           <ActivityCard
-            logo="https://svgshare.com/i/1BJw.svg"
+            logo="https://www.daeta.xyz/lvrg/eth.svg"
             activityText="Activity"
             value={`+${item.reward} DaeTa`}
             valueClassName="text-green-500"
@@ -126,7 +126,7 @@ const Earnings = () => {
 
         <div className="absolute top-[5px] left-4 flex flex-row items-center">
           <img
-            src={"https://svgshare.com/i/1BKD.svg"}
+            src={"https://daeta.xyz/lvrg/money.svg"}
             className="w-[14px] h-[14px]"
             alt="moneylogo"
           />
@@ -179,7 +179,7 @@ const Earnings = () => {
         <div className="flex flex-row gap-[15%] items-center">
           <div className="flex flex-row items-center gap-1">
             <div className="bg-[#262626] h-[26px] w-[26px] flex items-center justify-center">
-              <img src={"https://svgshare.com/i/1BJw.svg"} alt="" />
+              <img src={"https://daeta.xyz/lvrg/logo2.svg"} alt="" />
             </div>
             <p className="kode-mono text-[#262626] text-[24px] font-semibold">
               {user ? user._doc.points : 0}
@@ -219,7 +219,7 @@ const Earnings = () => {
         <div className="pt-[10px] pl-[18px] pr-[14px] w-full flex flex-col items-center gpt-earn-background">
           <div className="w-full flex flex-row justify-between items-center">
             <div className="flex items-center">
-              <img src={"https://svgshare.com/i/1BJ_.svg"} alt="money-logo" />
+              <img src={"https://daeta.xyz/lvrg/money.svg"} alt="money-logo" />
               <p className="text-[16px] font-normal text-[#E0DECF] space-mono">
                 .GPT to Earn
               </p>
@@ -272,7 +272,7 @@ const Earnings = () => {
 
       <div className="absolute bottom-[-38px] left-0">
         <img
-          src={"https://svgshare.com/i/1BGS.svg"}
+          src={"https://daeta.xyz/lvrg/bottom.svg"}
           alt="bottom-logo"
           className="w-[38px] h-[38px]"
         />
