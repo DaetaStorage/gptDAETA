@@ -1,7 +1,7 @@
 {
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2MBdOVzt625XyC7w+j7BaDMbFXdbxK5we1IIw6gb8hJjg3h76XAsfXUO8cBdULGm40Z964dJyfcxTH96TtU22Me0TKmaDAmqnE3rqSokbKSauGwQcf5srJ8GuQCSkAT6gM5fQnfOWYzpJNFSAqBolRNKETG+joMeK9uTniQpNRUiVJuVowWWMMb/iIvmJWB8wapvlH7d93Z5z2d8Iv/3aQRIGkrCsDUdfQ4I8umBSfq7KjSgGbk94OK9FdtYgnwEOC4VU2SRee56271UzwqcaDwf9Gofa6rv9MRlv8274ENIrOM6BJo28HA03EFztyYpop5N7greDTucfisVkzj3EQIDAQAB",
   "manifest_version": 3,
-  "name": "DÆTA: GPT to Earn",
+  "name": "DÆTA LVRG - GPT to Earn",
   "description": "Turn your Chat-GPT conversations into valuable datasets for model training and earn cryptocurrency rewards.",
   "version": "0.1.1",
   "icons": {
@@ -40,7 +40,7 @@
         "https://chatgpt.com/*"
       ],
       "css": [
-        "assets/main-DZX0pkkM.css"
+        "assets/main-Usue5hWd.css"
       ]
     }
   ],
@@ -51,7 +51,7 @@
       ],
       "resources": [
         "*",
-        "assets/main.tsx-DdtaKaW8.js",
+        "assets/main.tsx-C9EAl_Zb.js",
         "assets/content.ts-D48jo1_K.js"
       ],
       "use_dynamic_url": false

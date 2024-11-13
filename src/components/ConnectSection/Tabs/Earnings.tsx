@@ -17,7 +17,8 @@ const Earnings = () => {
   const [conversations, setConversations] = useState<IConversation[] | null>(
     null
   );
-  const { account, balance, user, refetch, claimRewards } = useWallet()!;
+  const { account, balance, user, refetch, claimRewards, claimPoints } =
+    useWallet()!;
 
   useEffect(() => {
     refetch();
@@ -34,8 +35,6 @@ const Earnings = () => {
 
   useEffect(() => {
     const fetchConversations = async () => {
-      console.log("Fetch Conversations");
-
       const { data } = await axios.get(
         "https://chatgpt.com/backend-api/conversations",
         {
@@ -92,7 +91,7 @@ const Earnings = () => {
   if (user && user.histories.length > 0) {
     historyContent = user.histories.map((item: any, idx: number) => (
       <div key={idx} className="pb-[10px] w-full">
-        <div className="flex flex-col justify-start px-4">
+        <div className="flex flex-col justify-start ml-4">
           <div className="text-[#D9D9D9] text-[12px] font-normal space-mono leading-[24px]">
             Activity
             <br />
@@ -103,7 +102,7 @@ const Earnings = () => {
         </div>
         <div className="flex flex-col gap-[1px] mt-[9px] w-full">
           <ActivityCard
-            logo="https://www.daeta.xyz/lvrg/eth.svg"
+            logo="https://daeta.xyz/lvrg/logoPoint.png"
             activityText="Activity"
             value={`+${item.reward} DaeTa`}
             valueClassName="text-green-500"
@@ -172,11 +171,19 @@ const Earnings = () => {
     }
   };
 
+  const handleClaimRewards = () => {
+    if (user && user._doc.points > 0) {
+      claimPoints();
+    } else {
+      alert("No points to claim");
+    }
+  };
+
   return (
     <div className="flex flex-col w-full space-mono bg-[#262626] relative">
       <div className="w-full bg-[#F7FF98] flex flex-col justify-end pl-4 pb-[18px] pt-12 gap-4">
         <p className="text-[22px] text-black">.my Daeta Points</p>
-        <div className="flex flex-row gap-[15%] items-center">
+        <div className="flex flex-row gap-[15%] items-center justify-between">
           <div className="flex flex-row items-center gap-1">
             <div className="bg-[#262626] h-[26px] w-[26px] flex items-center justify-center">
               <img src={"https://daeta.xyz/lvrg/logo2.svg"} alt="" />
@@ -185,7 +192,16 @@ const Earnings = () => {
               {user ? user._doc.points : 0}
             </p>
           </div>
+          <button
+            className="bg-[#E0DECF] w-fit h-6 text-[14px] space-mono text-[#262626] flex justify-center items-center border border-transparent hover:border-[#F7FF98] hover:bg-[#1C1C1C] hover:text-[#F7FF98] transition-all ease-in-out duration-300 mr-3 text-center p-1 hidden"
+            onClick={handleClaimRewards}
+          >
+            Collect Rewards
+          </button>
         </div>
+        <p className="text-[12px] text-black leading-normal mr-2">
+          * You can claim tokens for your 25% points every 7 days.
+        </p>
       </div>
 
       {/* Deposit Part */}

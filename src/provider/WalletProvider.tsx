@@ -17,7 +17,9 @@ export type WalletContext = {
   disconnectWallet: () => Promise<void>;
   claimRewards: (items: number, conversations: any) => Promise<void>;
   verifyRefferalCode: (refCode: string, isSkipped: boolean) => Promise<void>;
+  verifyOtp: (otp: string) => Promise<void>;
   refetch: () => void;
+  claimPoints: () => Promise<void>;
 };
 
 type WalletProviderProps = {
@@ -114,42 +116,107 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
     }
   };
 
-  const claimRewards = async (items: number, conversations: any) => {
+  const claimPoints = async () => {
     try {
       if (window.ethereum && window.ethereum.isMetaMask && account) {
         const response = await chrome.runtime.sendMessage(extensionId, {
-          type: "CLAIM_REWARDS",
-          url: "https://api.daeta.xyz/api/extension/earning-history",
+          type: "CLAIM_POINTS",
+          url: "https://api.daeta.xyz/api/extension/claim-points",
           options: {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               wallet: account,
-              items: items,
-              reward: items,
-              conversations,
             }),
           },
         });
 
         if (response.data && response.data.count) {
-          const contract = new web3.eth.Contract(contractABI, DaeTaContract);
-          contract.methods
-            .claimRewards(Number(response.data.count) * decimals)
-            .send({
-              from: account,
-            });
+          // Generate Signature
+          const sigResp = await chrome.runtime.sendMessage(extensionId, {
+            type: "GET_SIGNATURE",
+            url: "https://api.daeta.xyz/api/extension/generate-signature",
+            options: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                wallet: account,
+                points: response.data.count,
+              }),
+            },
+          });
 
-          new Promise((resolve) => setTimeout(resolve, 50000));
+          if (sigResp.data && sigResp.data.sig) {
+            // Claim tokens from Contract
+            try {
+              const contract = new web3.eth.Contract(
+                contractABI,
+                DaeTaContract
+              );
+              const isCallable = await contract.methods
+                .claimRewards(sigResp.data.sig)
+                .call({ from: account });
 
-          await getOrRegisterUser();
-          alert("Transaction is succeed.");
+              if (isCallable) {
+                contract.methods.claimRewards(sigResp.data.sig).send({
+                  from: account,
+                });
+
+                new Promise((resolve) => setTimeout(resolve, 50000));
+
+                await chrome.runtime.sendMessage(extensionId, {
+                  type: "CLAIMED_POINTS",
+                  url: "https://api.daeta.xyz/api/extension/claimed-points",
+                  options: {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      wallet: account,
+                      points: response.data.count,
+                    }),
+                  },
+                });
+
+                alert("Transaction is succeed.");
+                await getOrRegisterUser();
+              } else {
+                alert("You can't claim your tokens at this time.");
+              }
+            } catch (error) {
+              alert("You can't claim your tokens at this time.");
+            }
+          } else {
+            alert("Internal server error");
+          }
         } else {
-          alert(
-            "Warning. You already claimed rewards for those conversations."
-          );
+          alert("Internal server error.");
         }
       }
+    } catch (error) {
+      await getOrRegisterUser();
+      alert("Transaction is pending, please check later.");
+    }
+  };
+
+  const claimRewards = async (items: number, conversations: any) => {
+    try {
+      await chrome.runtime.sendMessage(extensionId, {
+        type: "CLAIM_REWARDS",
+        url: "https://api.daeta.xyz/api/extension/earning-history",
+        options: {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            wallet: account,
+            items: items,
+            reward: items,
+            conversations,
+          }),
+        },
+      });
+
+      await getOrRegisterUser();
+      alert("You claimed your points");
     } catch (error) {
       await getOrRegisterUser();
       alert("Transaction is pending, please check later.");
@@ -173,6 +240,28 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
       setUserInfo(resp.data);
     } catch (error) {
       console.error("Error during getting an user info: ", error);
+    }
+  };
+
+  const verifyOtp = async (otp: string) => {
+    try {
+      await chrome.runtime.sendMessage(extensionId, {
+        type: "VERIFY_OTP_CODE",
+        url: "https://api.daeta.xyz/api/extension/verify-otp",
+        options: {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            wallet: account,
+            otp,
+          }),
+        },
+      });
+
+      alert("OTP Code is verfied");
+      await getOrRegisterUser();
+    } catch (error) {
+      console.error("Error during verifying the otp code: ", error);
     }
   };
 
@@ -201,6 +290,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
 
   const refetch = () => {
     getETHBalance();
+    getOrRegisterUser();
   };
 
   return (
@@ -216,7 +306,9 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
         disconnectWallet,
         claimRewards,
         verifyRefferalCode,
+        verifyOtp,
         refetch,
+        claimPoints,
       }}
     >
       {children}

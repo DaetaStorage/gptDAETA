@@ -9,16 +9,16 @@ interface ActivityCardProps {
 }
 
 const ActivityCard: React.FC<ActivityCardProps> = ({
-  logo = "https://www.daeta.xyz/lvrg/eth.svg", // Default logo
+  logo = "https://daeta.xyz/lvrg/logoPoint.png", // Default logo
   // logo = "https://svgshare.com/i/1BJx.svg", // Default logo
   activityText = "Activity", // Default activity text
-  value = "+0.123 ETH", // Default value
+  value = "+0.123 BNB", // Default value
   valueClassName = "text-white", // Default class for value
 }) => {
   return (
     <div className="bg-[#1C1C1C] border border-[#262626] py-[17px] px-[15px] w-full flex flex-row justify-between items-center">
-      <div className="flex flex-row gap-[13px]">
-        <img src={logo} alt="logo" className="w-[31px] h-9" />
+      <div className="flex flex-row gap-[13px] items-center">
+        <img src={logo} className="w-8 h-8" alt="logo" />
         <p className="text-white text-[12px] font-normal space-mono">
           {activityText}
         </p>

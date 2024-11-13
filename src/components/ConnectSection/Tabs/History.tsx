@@ -20,7 +20,7 @@ const History = () => {
         </div>
         <div className="flex flex-col gap-[1px] mt-[9px] w-full">
           <ActivityCard
-            logo="https://www.daeta.xyz/lvrg/eth.svg"
+            logo="https://daeta.xyz/lvrg/logoPoint.png"
             activityText="Activity"
             value={`+${item.reward} DaeTa`}
             valueClassName="text-green-500"
