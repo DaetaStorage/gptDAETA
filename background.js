@@ -119,6 +119,17 @@ chrome.runtime.onMessageExternal.addListener(
 
       // Required to return true when using async response
       return true;
+    } else if (message.type === "GET_PRICE") {
+      // Perform the fetch request
+      fetch(message.url, message.options)
+        .then((response) => response.json()) // Adjust this if you expect a different response type
+        .then((data) => sendResponse({ success: true, data }))
+        .catch((error) =>
+          sendResponse({ success: false, error: error.toString() })
+        );
+
+      // Required to return true when using async response
+      return true;
     }
   }
 );

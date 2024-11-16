@@ -6,7 +6,7 @@ import { useWallet } from "../provider/WalletProvider";
 const Body = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [refCode, setRefCode] = useState<string>("");
-  const { isConnected, user, verifyOtp } = useWallet()!;
+  const { isConnected, user, verifyRefferalCode } = useWallet()!;
 
   return (
     <>
@@ -28,8 +28,8 @@ const Body = () => {
       >
         {isConnected ? (
           <>
-            {user && user._doc.isOtp ? (
-              // {(user && user._doc.isSkipped) || (user && user._doc.refCode) ? (
+            {/* {user && user._doc.isOtp ? ( */}
+            {(user && user._doc.isSkipped) || (user && user._doc.refCode) ? (
               <CSections onClicked={setIsClicked} />
             ) : (
               <div className="bg-[#1C1C1C] relative h-[533px] flex flex-col justify-center items-center w-[360px]">
@@ -55,24 +55,24 @@ const Body = () => {
                   <input
                     type="text"
                     className="bg-[#1c1c1c] text-slate-400 border-[#2e2e2e] border-[1px] p-2 mt-4 rounded-md w-[220px] placeholder:text-center outline-none"
-                    placeholder="Your OTP code"
+                    placeholder="Your Referral code"
                     value={refCode}
                     onChange={(e) => setRefCode(e.target.value)}
                   />
                   <div className="mt-8 flex flex-col gap-7">
                     <button
-                      onClick={() => verifyOtp(refCode)}
+                      onClick={() => verifyRefferalCode(refCode, false)}
                       className="w-[145px] space-mono h-[38px] bg-[#F7FF98] flex items-center justify-center text-[14px] font-bold text-[#262626]"
                     >
                       Confirm
                     </button>
                   </div>
-                  {/* <p
+                  <p
                     className="text-[14px] text-center w-[70%] text-[#D9D9D9] mt-5 cursor-pointer"
                     onClick={() => verifyRefferalCode(refCode, true)}
                   >
                     {"Skip >>"}
-                  </p> */}
+                  </p>
                 </div>
               </div>
             )}

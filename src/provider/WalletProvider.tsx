@@ -119,6 +119,29 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
   const claimPoints = async () => {
     try {
       if (window.ethereum && window.ethereum.isMetaMask && account) {
+        const priceInRaw = await chrome.runtime.sendMessage(extensionId, {
+          type: "GET_PRICE",
+          url: "https://api.dexscreener.com/latest/dex/search?q=0x53b0fd79c57aebeb6cf567804883ad4702df9607&chain=ethereum",
+          options: {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          },
+        });
+
+        let tokenPrice = 0;
+        if (
+          priceInRaw.data &&
+          priceInRaw.data.pairs &&
+          priceInRaw.data.pairs[0].priceUsd
+        ) {
+          tokenPrice = Number(priceInRaw.data.pairs[0].priceUsd);
+        }
+
+        if (tokenPrice === 0) {
+          alert("Internal server error");
+          return;
+        }
+
         const response = await chrome.runtime.sendMessage(extensionId, {
           type: "CLAIM_POINTS",
           url: "https://api.daeta.xyz/api/extension/claim-points",
@@ -154,36 +177,49 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
                 DaeTaContract
               );
               const isCallable = await contract.methods
-                .claimRewards(sigResp.data.sig)
+                .claimRewards(
+                  sigResp.data.sig,
+                  (tokenPrice * 10 ** 6).toString()
+                )
                 .call({ from: account });
 
               if (isCallable) {
-                contract.methods.claimRewards(sigResp.data.sig).send({
-                  from: account,
-                });
+                try {
+                  const hash = await contract.methods
+                    .claimRewards(
+                      sigResp.data.sig,
+                      (tokenPrice * 10 ** 6).toString()
+                    )
+                    .send({
+                      from: account,
+                    });
 
-                new Promise((resolve) => setTimeout(resolve, 50000));
+                  console.log({ hash });
 
-                await chrome.runtime.sendMessage(extensionId, {
-                  type: "CLAIMED_POINTS",
-                  url: "https://api.daeta.xyz/api/extension/claimed-points",
-                  options: {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      wallet: account,
-                      points: response.data.count,
-                    }),
-                  },
-                });
+                  await chrome.runtime.sendMessage(extensionId, {
+                    type: "CLAIMED_POINTS",
+                    url: "https://api.daeta.xyz/api/extension/claimed-points",
+                    options: {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        wallet: account,
+                        points: response.data.count,
+                      }),
+                    },
+                  });
 
-                alert("Transaction is succeed.");
-                await getOrRegisterUser();
+                  alert("Transaction is succeed.");
+                  await getOrRegisterUser();
+                } catch (error: any) {
+                  alert(error.message);
+                  return;
+                }
               } else {
                 alert("You can't claim your tokens at this time.");
               }
-            } catch (error) {
-              alert("You can't claim your tokens at this time.");
+            } catch (error: any) {
+              alert(error.message);
             }
           } else {
             alert("Internal server error");

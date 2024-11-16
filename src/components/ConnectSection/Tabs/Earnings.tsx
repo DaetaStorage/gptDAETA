@@ -193,7 +193,7 @@ const Earnings = () => {
             </p>
           </div>
           <button
-            className="bg-[#E0DECF] w-fit h-6 text-[14px] space-mono text-[#262626] flex justify-center items-center border border-transparent hover:border-[#F7FF98] hover:bg-[#1C1C1C] hover:text-[#F7FF98] transition-all ease-in-out duration-300 mr-3 text-center p-1 hidden"
+            className="bg-[#E0DECF] w-fit h-6 text-[14px] space-mono text-[#262626] flex justify-center items-center border border-transparent hover:border-[#F7FF98] hover:bg-[#1C1C1C] hover:text-[#F7FF98] transition-all ease-in-out duration-300 mr-3 text-center p-1"
             onClick={handleClaimRewards}
           >
             Collect Rewards

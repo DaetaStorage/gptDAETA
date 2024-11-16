@@ -1,47 +1,47 @@
-// import { useState } from "react";
-// import { useWallet } from "../../../provider/WalletProvider";
+import { useState } from "react";
+import { useWallet } from "../../../provider/WalletProvider";
 
 const RewardClaim = () => {
-  // const { user } = useWallet()!;
-  // const [isCopied, setIsCopied] = useState<boolean>(false);
+  const { user } = useWallet()!;
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  // let referralContent;
-  // if (user && user.referrals.length > 0) {
-  //   referralContent = user.referrals.map((item: any, idx: number) => (
-  //     <div
-  //       key={idx}
-  //       className="group pl-4 pr-3 py-2 flex justify-between items-center bg-[#1C1C1C] hover:bg-[#262626] transition-all cursor-pointer"
-  //     >
-  //       <span className="text-[#D9D9D9] text-sm group-hover:text-[#F7FF98]">
-  //         My Referrer Earnings
-  //       </span>
-  //       <div className="flex items-center gap-1">
-  //         <span className="text-white font-bold text-[14px]">{`+${item.reward}`}</span>
-  //         <div className="w-5 h-5 bg-[#262626] flex items-center justify-center">
-  //           <img src={"https://daeta.xyz/lvrg/referImg.svg"} alt="referImg" />
-  //         </div>
-  //       </div>
-  //     </div>
-  //   ));
-  // } else {
-  //   referralContent = (
-  //     <div className="group pl-4 pr-3 py-2 flex justify-between items-center bg-[#1C1C1C] hover:bg-[#262626] transition-all cursor-pointer">
-  //       <span className="text-[#D9D9D9] text-sm group-hover:text-[#F7FF98]">
-  //         No referral. Please invite your friends.
-  //       </span>
-  //     </div>
-  //   );
-  // }
+  let referralContent;
+  if (user && user.referrals.length > 0) {
+    referralContent = user.referrals.map((item: any, idx: number) => (
+      <div
+        key={idx}
+        className="group pl-4 pr-3 py-2 flex justify-between items-center bg-[#1C1C1C] hover:bg-[#262626] transition-all cursor-pointer"
+      >
+        <span className="text-[#D9D9D9] text-sm group-hover:text-[#F7FF98]">
+          My Referrer Earnings
+        </span>
+        <div className="flex items-center gap-1">
+          <span className="text-white font-bold text-[14px]">{`+${item.reward}`}</span>
+          <div className="w-5 h-5 bg-[#262626] flex items-center justify-center">
+            <img src={"https://daeta.xyz/lvrg/referImg.svg"} alt="referImg" />
+          </div>
+        </div>
+      </div>
+    ));
+  } else {
+    referralContent = (
+      <div className="group pl-4 pr-3 py-2 flex justify-between items-center bg-[#1C1C1C] hover:bg-[#262626] transition-all cursor-pointer">
+        <span className="text-[#D9D9D9] text-sm group-hover:text-[#F7FF98]">
+          No referral. Please invite your friends.
+        </span>
+      </div>
+    );
+  }
 
-  // const handleCopy = async () => {
-  //   try {
-  //     await navigator.clipboard.writeText(user ? user._doc.code : "");
-  //     setIsCopied(true);
-  //     setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
-  //   } catch {
-  //     // console.error("Failed to copy the invite code.");
-  //   }
-  // };
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(user ? user._doc.code : "");
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+    } catch {
+      // console.error("Failed to copy the invite code.");
+    }
+  };
 
   return (
     <div className="flex flex-col w-full space-mono bg-[#262626] relative">
@@ -67,7 +67,7 @@ const RewardClaim = () => {
           on the points earned by your invited friends. No limits, start now!
         </p>
 
-        {/* <button
+        <button
           onClick={handleCopy}
           className="py-4 px-3 flex flex-row items-center justify-center gap-[10px] bg-[#E0DECF]"
         >
@@ -75,11 +75,11 @@ const RewardClaim = () => {
           <p className="text-[#262626] text-[14px] font-bold leading-[100%] space-mono">
             {isCopied ? "Copied!" : "Copy Invite Code"}
           </p>
-        </button> */}
+        </button>
       </div>
 
       {/* Referrer Earnings */}
-      {/* {referralContent} */}
+      {referralContent}
 
       {/* Social Rewards */}
       {/* <div className="mt-[15px] pl-4 pr-3 pt-3 pb-7 flex flex-col gap-[13px] bg-[#1C1C1C]">
