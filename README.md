@@ -4,7 +4,7 @@
 
 ###
 
-<p align="left">We are redefining AI data by empowering the AI revolution with a focus on speed, efficiency, simplicity, decentralization and incentive alignment. Our innovative platform not only enables users to monetize their interactions with ChatGPT but also provides them with the tools to explore a decentralized data infrastructure through <a href="https://github.com/DaetaStorage/LVRG-Plugin/releases/download/Assets/LVRG.Plugin.zip" target="_blank">DÆTA LVRG Plugin.</a></p>
+<p align="left">We are redefining AI data by empowering the AI revolution with a focus on speed, efficiency, simplicity, decentralization and incentive alignment. Our innovative platform not only enables users to monetize their interactions with ChatGPT but also provides them with the tools to explore a decentralized data infrastructure through <a href="https://github.com/DaetaStorage/gptDAETA/releases/download/Assets/gptDAETA.zip" target="_blank">gptDÆTA</a></p>
 
 <p align="left">By leveraging cutting-edge blockchain technology, we ensure that data ownership is returned to users, promoting privacy and security while facilitating seamless data sharing. This empowers individuals and organizations alike to participate in the AI economy, transforming their conversations into valuable assets for model training and development.</p>
 
