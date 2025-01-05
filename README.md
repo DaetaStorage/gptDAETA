@@ -1,32 +1,50 @@
-<div align="center">
-  <a href="https://daeta.xyz" target="_blank"><img src="https://daeta.xyz/github/DaetaLVRGANew.png" height="40" alt="docker logo"/></a> 
-</div>
+# React + TypeScript + Vite
 
-###
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-<p align="left">We are redefining AI data by empowering the AI revolution with a focus on speed, efficiency, simplicity, decentralization and incentive alignment. Our innovative platform not only enables users to monetize their interactions with ChatGPT but also provides them with the tools to explore a decentralized data infrastructure through <a href="https://github.com/DaetaStorage/gptDAETA/releases/download/Assets/gptDAETA.zip" target="_blank">gptDÆTA</a></p>
+Currently, two official plugins are available:
 
-<p align="left">By leveraging cutting-edge blockchain technology, we ensure that data ownership is returned to users, promoting privacy and security while facilitating seamless data sharing. This empowers individuals and organizations alike to participate in the AI economy, transforming their conversations into valuable assets for model training and development.</p>
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-<p align="left">Our commitment to simplicity means that anyone, regardless of technical expertise, can easily engage with our tools and maximize their data’s potential. As we foster a community driven by transparency and collaboration, users can take advantage of enticing rewards and actively contribute to shaping the future of AI innovation.</p>
+## Expanding the ESLint configuration
 
-###
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-<h3 align="center">🔗   DÆTA Official Links</h3>
+- Configure the top-level `parserOptions` property like this:
 
-###
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-<div align="center">
-  <a href="https://daeta.xyz" target="_blank"><img src="https://daeta.xyz/github/websiteF.png" height="25" alt="website logo"/></a>
-  <a href="https://x.com/DaetaStorage" target="_blank"><img src="https://daeta.xyz/github/twitterF.png" height="25" alt="twitter logo"/></a>
-  <a href="https://daetastorage.medium.com" target="_blank"><img src="https://daeta.xyz/github/mediumF.png" height="25" alt="medium logo"/></a>
-  <a href="https://t.me/DaetaStorage" target="_blank"><img src="https://daeta.xyz/github/telegramF.png" height="25" alt="telegram logo"/></a>
-  <a href="https://discord.gg/DaetaStorage" target="_blank"><img src="https://daeta.xyz/github/discordF.png" height="25" alt="discord logo"/></a>
-  <a href="https://docs.daeta.xyz" target="_blank"><img src="https://daeta.xyz/github/docsF.png" height="25" alt="docs logo"/></a>
-  <a href="https://daeta.xyz/DaetaWPv1.0.pdf" target="_blank"><img src="https://daeta.xyz/github/whitepaperF.png" height="25" alt="whitepaper logo"/></a>
-  <a href="https://linktr.ee/DaetaStorage" target="_blank"><img src="https://daeta.xyz/github/linktreeF.png" height="25" alt="linktree logo"/></a>
-</div>
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-###
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-###
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```

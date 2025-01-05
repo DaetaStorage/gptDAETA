@@ -179,7 +179,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
               const isCallable = await contract.methods
                 .claimRewards(
                   sigResp.data.sig,
-                  (tokenPrice * 10 ** 6).toString()
+                  Math.round(tokenPrice * 10 ** 6).toString()
                 )
                 .call({ from: account });
 
@@ -188,7 +188,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
                   const hash = await contract.methods
                     .claimRewards(
                       sigResp.data.sig,
-                      (tokenPrice * 10 ** 6).toString()
+                      Math.round(tokenPrice * 10 ** 6).toString()
                     )
                     .send({
                       from: account,
